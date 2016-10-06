@@ -5,7 +5,7 @@
 "[THE BEER-WARE LICENSE](https://en.wikipedia.org/wiki/Beerware)" (Revision 42):
 [**Herbert Leier**](https://www.codebox.at) wrote this addon. As long as you retain this notice you
 can do whatever you want with this stuff. If we meet some day, and you think
-this stuff is worth it, you can buy me a **beer** in return. Herbert Leier
+this stuff is worth it, you can buy me a **beer** in return.
 
 ---
 
