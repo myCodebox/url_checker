@@ -26,6 +26,6 @@ More info can be found here:
 
 ### ToDo List
 
-- ~Make a runing REDAXO 5 Addon~
+- ~~Make a runing REDAXO 5 Addon~~
 - Clear ab the code
 - better curl testing
