@@ -1,4 +1,4 @@
-### LESS Compiler Redaxo 5 - [Beerware License](https://en.wikipedia.org/wiki/Beerware)
+### URL Checker Redaxo 5 - [Beerware License](https://en.wikipedia.org/wiki/Beerware)
 
 ![Funny Beer](./assets/img/funny_beer.gif "Funny Beer")
 
@@ -15,5 +15,3 @@ Sie mit dem Material machen, was Sie möchten. Wenn wir uns eines Tages treffen 
 denken, das Material ist es wert, können Sie mir dafür ein **Bier** ausgeben.
 
 ---
-
-
