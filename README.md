@@ -19,7 +19,6 @@ More info can be found here:
 ### Credits
 
 * Herbert Leier - https://www.codebox.at
-* Thomas Schmidt - Help to fix some bugs **:)**
 * Raum3 - http://www.raum3.at
 
 ---
@@ -27,5 +26,5 @@ More info can be found here:
 ### ToDo List
 
 - ~~Make a runing REDAXO 5 Addon~~
-- Clear ab the code
+- Clear up the code
 - better curl testing
