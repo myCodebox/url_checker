@@ -1,0 +1,23 @@
+# Alle hier gesetzten Werte können über $addon->getProperty($key) abgefragt werden
+
+package:        url_checker
+version:        '0.1.0'
+author:         Herbert Leier
+supportpage:    https://www.codebox.at/
+
+page:
+    block:  codebox
+    title:  'URL Checker'
+    perm:   url_checker[]
+    icon:   rex-icon fa-link
+    subpages:
+        url_checker:  { pjax: true, title: 'translate:url_checker', perm: url_checker[] }
+        info:
+            title: 'translate:info'
+            subpages:
+                info:       { title: 'translate:info'}
+                changelog:  { title: 'translate:changelog'}
+                license:    { title: 'translate:license'}
+
+requires:
+    redaxo: '>= 5.2.0'

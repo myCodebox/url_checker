@@ -1,0 +1,30 @@
+navigation_codebox = Codebox
+
+url_checker = URL Checker
+url_checker/overview = Übersicht
+
+url_checker/all_links	= Alle externen Links
+url_checker/link 		= Link
+url_checker/origin 		= Herkunft
+url_checker/status 		= Status
+url_checker/createdate 	= Erstellt
+url_checker/updatedate 	= Geprüft
+
+url_checker/clean 			= Datenbank leeren
+url_checker/clean_confirm 	= Datenbank wirklich leeren?
+
+url_checker/collect_info 	= Es wurden "{0}" Links gefunden!
+url_checker/clean_info 		= Die Datenbank wurde geleert!
+
+url_checker/collect 			= Alle Links sammeln
+url_checker/recollect 			= Alle Links neu sammeln
+url_checker/recollect_confirm 	= Bestehende Links überschreiben?
+
+url_checker/start_test 			= Test starten
+url_checker/run_test 			= Alle {0} Links testen
+url_checker/run_test_confirm	= Das Testen der "{0}" Links, könnte etwas Zeit in anspruch nehmen!
+
+info 		= Info
+license 	= Lizenz
+help 		= Hilfe
+changelog 	= Änderungen

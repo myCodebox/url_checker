@@ -1,0 +1,26 @@
+#url_test_window .modal-body {
+	font-family: Consolas;
+	white-space: pre;
+
+	background-color: #333;
+	color: #ccc;
+	height: 400px;
+	max-height: 400px;
+	overflow: auto;
+	padding: 1.000em;
+}
+
+	#url_test_window .modal-body-inner {
+		margin-bottom: 1.000em;
+	}
+
+.progress {
+	margin: 10px 0 5px;
+}
+
+
+#url_test_window .modal-body div.tested_url::before {
+	display: inline-block;
+	content: '>>\00a0';
+	color: #999;
+}
