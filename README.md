@@ -26,5 +26,6 @@ More info can be found here:
 ### ToDo List
 
 - ~~Make a runing REDAXO 5 Addon~~
+- ~~Better JS AJAX~~
 - Clear up the code
 - better curl testing

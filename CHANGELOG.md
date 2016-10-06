@@ -1,3 +1,6 @@
+### 06.10.2016 Version 0.1.1 ###
+- Include better AJAX
+
 ### 06.10.2016 Version 0.1.0 ###
 - Addon is working now
 
