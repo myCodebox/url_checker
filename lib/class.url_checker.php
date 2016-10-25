@@ -33,7 +33,7 @@
 				foreach(self::$clang AS $clang)
 				{
 					$art = new rex_article_content($id, $clang);
-					self::parseArtickle(
+					self::parseArticle(
 						$id,
 						$art->getArticle(),
 						$clang
@@ -43,7 +43,7 @@
 		}
 
 		// parse all article and get all href
-		private static function parseArtickle($id = NULL, $article = NULL, $clang = 1)
+		private static function parseArticle($id = NULL, $article = NULL, $clang = 1)
 		{
 			$regexp = "<a\s[^>]*href=(\"??)(https?[^\" >]*?)\\1[^>]*>(.*)<\/a>";
 			if(preg_match_all("/$regexp/siU", $article, $matches))
