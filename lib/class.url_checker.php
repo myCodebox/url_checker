@@ -19,14 +19,14 @@
 
 			self::$ids = url_checker_ids::init();
 			self::$clang = rex_clang::getAllIds();
-			self::getArtickle();
+			self::getArticle();
 
 			return self::$link_count;
 		}
 
 
 		// get all article
-		private static function getArtickle()
+		private static function getArticle()
 		{
 			foreach(self::$ids AS $id)
 			{
