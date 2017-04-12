@@ -1,5 +1,7 @@
 navigation_codebox = Codebox
 
+url_checker_title = URL Checker for Redaxo 5
+
 url_checker = URL Checker
 url_checker/overview = Übersicht
 
