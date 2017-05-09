@@ -25,6 +25,14 @@
 	color: #999;
 }
 
+.testing_now {
+	width: 85%;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .tooltip-inner {
 	word-wrap: break-word;
 }

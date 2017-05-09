@@ -17,9 +17,9 @@
 		{
 			self::$addon = $addon;
 
-			// self::$ids = url_checker_ids::init();
-			// self::$clang = rex_clang::getAllIds();
-			// self::getArticle();
+			self::$ids = url_checker_ids::init();
+			self::$clang = rex_clang::getAllIds();
+			self::getArticle();
 
 			self::getFundingDB('funding_db_overview', 'funding_db/funding_db/overview');
 

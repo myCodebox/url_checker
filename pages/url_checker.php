@@ -138,10 +138,11 @@
 		if( !function_exists('get_short_link') ){ function get_short_link($params){
 			$list = $params['list'];
 			$href = $list->getValue('link');
-			$text = substr($href, 0, 60);
+			$max = 50;
+			$short = substr($href, 0, $max) . ((strlen($href) > $max ) ? ' ...' : '');
 			$link = sprintf(
-				'<a href="%s" title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</a>',
-				$href, $href, $text, (strlen($href) > 64 ) ? ' ...' : ''
+				'<a href="%s" title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s</a>',
+				$href, $href, $short
 			);
 			return $list->getColumnLink("status", $link, $params);
 		}}
