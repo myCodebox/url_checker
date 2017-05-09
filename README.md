@@ -29,3 +29,4 @@ More info can be found here:
 - ~~Better JS AJAX~~
 - Cleanup the code
 - better curl testing
+- Better DB selection (not hard coded)

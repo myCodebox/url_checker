@@ -1,3 +1,6 @@
+### 06.10.2016 Version 0.2.0 ###
+- Get URLs from DB (hard coded)
+
 ### 06.10.2016 Version 0.1.1 ###
 - Include better AJAX
 
