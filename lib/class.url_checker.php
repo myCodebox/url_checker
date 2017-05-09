@@ -39,28 +39,37 @@
 				$arr = '';
 				if($sql->getRows()) { // nicht 0!
 			    	while($sql->hasNext()) {
-						$id = $sql->getValue('id');
-						$de[] = $sql->getValue('homepage_de');
-						$en[] = $sql->getValue('homepage_en');
 
-						if( count($de) > 0 && $arr = self::clearUrls($de)  ) {
-							self::$links[] = [
-								'id' 		=> $id,
-								'links' 	=> $arr,
-								'clang' 	=> 1,
-								'origin' 	=> $addonpage,
-							];
-							self::saveToDb($arr, $id, 1, $addonpage);
+						$id = $sql->getValue('id');
+						$de = $sql->getValue('homepage_de');
+						$en = $sql->getValue('homepage_en');
+
+						$match = [];
+						if($de != '') {
+							$match[] = $de;
+							if( $arr = self::clearUrls($match)  ) {
+								self::$links[] = [
+									'id' 		=> $id,
+									'links' 	=> $arr,
+									'clang' 	=> 1,
+									'origin' 	=> $addonpage,
+								];
+								self::saveToDb($arr, $id, 1, $addonpage);
+							}
 						}
 
-						if( count($en) > 0 && $arr = self::clearUrls($en) ) {
-							self::$links[] = [
-								'id' 		=> $id,
-								'links' 	=> $arr,
-								'clang' 	=> 2,
-								'origin' 	=> $addonpage,
-							];
-							self::saveToDb($arr, $id, 2, $addonpage);
+						$match = [];
+						if($en != '') {
+							$match[] = $en;
+							if( $arr = self::clearUrls($match) ) {
+								self::$links[] = [
+									'id' 		=> $id,
+									'links' 	=> $arr,
+									'clang' 	=> 2,
+									'origin' 	=> $addonpage,
+								];
+								self::saveToDb($arr, $id, 2, $addonpage);
+							}
 						}
 
 						$sql->next();
