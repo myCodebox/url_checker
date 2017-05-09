@@ -34,6 +34,7 @@
 		// get dato from db
 		private function getLinks()
 		{
+			// $arr = rex_sql::factory()->getArray('SELECT id, link, status FROM '.rex::getTable('url_checker'));
 			$arr = rex_sql::factory()->getArray('SELECT id, link FROM '.rex::getTable('url_checker'));
 			return $arr;
 		}

@@ -24,3 +24,7 @@
 	content: '>>\00a0';
 	color: #999;
 }
+
+.tooltip-inner {
+	word-wrap: break-word;
+}

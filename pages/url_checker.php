@@ -112,9 +112,9 @@
 
 
 		#$list = rex_list::factory('SELECT id, link, origin_clang, origin_id, origin_name, status, createdate, updatedate FROM '.rex::getTable($addon.'_'.$plugin).' ORDER BY id', 20);
-		$list = rex_list::factory('SELECT * FROM '.rex::getTable($addon).' ORDER BY id', 20);
+		$list = rex_list::factory('SELECT * FROM '.rex::getTable($addon).' ORDER BY id', 50);
 		$list->addTableAttribute('class', 'table-hover');
-		$list->addTableColumnGroup(array(20,'*',120,50,200));
+		$list->addTableColumnGroup(array(20,'*',240,50,200));
 
 
 		$thIcon = '#';
@@ -134,44 +134,57 @@
 		$list->setColumnLabel('link', $this->i18n('url_checker/link'));
 		$list->setColumnLayout('link', ['<th>###VALUE###</th>', '<td data-title="'.$list->getColumnLabel('link').'"><a href="###link###" target="_blank">###VALUE###</a></td>']);
 		$list->setColumnSortable('link');
+		$list->setColumnFormat('link', 'custom', 'get_short_link');
+		if( !function_exists('get_short_link') ){ function get_short_link($params){
+			$list = $params['list'];
+			$href = $list->getValue('link');
+			$text = substr($href, 0, 60);
+			$link = sprintf(
+				'<a href="%s" title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</a>',
+				$href, $href, $text, (strlen($href) > 64 ) ? ' ...' : ''
+			);
+			return $list->getColumnLink("status", $link, $params);
+		}}
 
 
 		$list->setColumnLabel('origin_clang', 'Lang');
 		$list->setColumnSortable('origin_clang');
 		$list->setColumnFormat('origin_clang', 'custom', 'get_origin_clang');
-		if( !function_exists('get_origin_clang') ){
-			function get_origin_clang($params){
-				$list = $params["list"];
-				return sprintf('<small>%s</small>',strtoupper(rex_clang::get($list->getValue("origin_clang"))->getCode()));
+		if( !function_exists('get_origin_clang') ){ function get_origin_clang($params){
+			$list = $params["list"];
+			return sprintf('<small>%s</small>',strtoupper(rex_clang::get($list->getValue("origin_clang"))->getCode()));
 		}}
 
 
 		$list->setColumnLabel('origin_id', $this->i18n('url_checker/origin'));
 		$list->setColumnSortable('origin_id');
 		$list->setColumnFormat('origin_id', 'custom', 'get_origin');
-		if( !function_exists('get_origin') ){
-			function get_origin($params){
-				$list = $params["list"];
-				return $list->getColumnLink(
-					'origin_id',
-					rex_article::get($list->getValue("origin_id"))->getValue('name'),
-					array(
-						'page' => 'content/edit',
-						'category_id' => rex_article::get($list->getValue("origin_id"))->getCategoryId(),
-						'article_id' => $list->getValue("origin_id"),
-						'clang' => $list->getValue("origin_clang"),
-						'mode' => 'edit',
-					));
+		if( !function_exists('get_origin') ){ function get_origin($params){
+			$list = $params["list"];
+			$name = rex_article::get($list->getValue("origin_id"))->getValue('name');
+			$short = substr($name, 0, 28);
+
+			$params = array(
+				'page' => 'content/edit',
+				'category_id' => rex_article::get($list->getValue("origin_id"))->getCategoryId(),
+				'article_id' => $list->getValue("origin_id"),
+				'clang' => $list->getValue("origin_clang"),
+				'mode' => 'edit',
+			);
+			$linkname = sprintf(
+				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</span>',
+				$name, $short, (strlen($name) > 32 ) ? ' ...' : ''
+			);
+			return $list->getColumnLink('origin_id', $linkname, $params);
 		}}
 
 
 		$list->setColumnLabel('status', $this->i18n('url_checker/status'));
 		$list->setColumnSortable('status');
 		$list->setColumnFormat('status', 'custom', 'get_status');
-		if( !function_exists('get_status') ){
-			function get_status($params){
-				$list = $params["list"];
-				return rex_api_url_checker_api::getStatusOutput($list->getValue("status"), $list->getValue("id"));
+		if( !function_exists('get_status') ){ function get_status($params){
+			$list = $params["list"];
+			return rex_api_url_checker_api::getStatusOutput($list->getValue("status"), $list->getValue("id"));
 		}}
 
 

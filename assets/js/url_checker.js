@@ -94,9 +94,10 @@ $(document).on('rex:ready', function (event, container) {
 	$('#url_test_window').modal({
 		keyboard: false, backdrop: 'static', show: false,
 	}).on('show.bs.modal', function(){
-		$('html').css('overflow', 'hidden');
+		$('html').css('overflow-y', 'hidden');
+		$('html').css('overflow-y', 'scroll');
 	}).on('hide.bs.modal', function(){
-		$('html').css('overflow', 'scroll');
+		$('html').css('overflow-y', 'scroll');
 	});
 
 	container.find('#url_checker-run_test').click(function (event, container) {
@@ -107,5 +108,7 @@ $(document).on('rex:ready', function (event, container) {
 			);
 		}
 	});
+
+	$('[data-toggle="tooltip"]').tooltip();
 });
 // jshint ignore:end
