@@ -27,5 +27,5 @@ More info can be found here:
 
 - ~~Make a runing REDAXO 5 Addon~~
 - ~~Better JS AJAX~~
-- Clear up the code
+- Cleanup the code
 - better curl testing
