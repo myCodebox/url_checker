@@ -20,10 +20,43 @@
 			self::$ids = url_checker_ids::init();
 			self::$clang = rex_clang::getAllIds();
 			self::getArticle();
+			// self::getFundingDB('funding_db_overview');
 
 			return self::$link_count;
 		}
 
+
+		// get all db entries
+		// private static function getFundingDB($dbname)
+		// {
+		// 	if( !empty($dbname) ) {
+		// 		$sql = rex_sql::factory();
+		// 		$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
+		// 		$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
+		// 		$sql->select();
+		//
+		// 		$arr = '';
+		// 		if($sql->getRows()) { // nicht 0!
+		// 	    	while($sql->hasNext()) {
+		// 				$id = $sql->getValue('id');
+		// 				$de = $sql->getValue('homepage_de');
+		// 				$en = $sql->getValue('homepage_en');
+		//
+		// 				if( !empty($de) ) { self::$links[] = [ 'id' => $id, 'links' => $de, 'clang' => 1, ]; }
+		// 				if( !empty($en) ) { self::$links[] = [ 'id' => $id, 'links' => $en, 'clang' => 2, ]; }
+		//
+		// 				$sql->next();
+		// 			}
+		// 		}
+		// 	}
+		//
+		//
+		// 	echo '<pre>';
+		// 	print_r(self::$links);
+		// 	echo '</pre>';
+		//
+		// 	exit;
+		// }
 
 		// get all article
 		private static function getArticle()
