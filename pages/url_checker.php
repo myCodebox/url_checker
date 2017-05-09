@@ -111,7 +111,7 @@
 
 
 
-		#$list = rex_list::factory('SELECT id, link, origin_clang, origin_id, origin_name, status, createdate, updatedate FROM '.rex::getTable($addon.'_'.$plugin).' ORDER BY id', 20);
+		#$list = rex_list::factory('SELECT id, link, origin_name, origin_clang, origin_id, status, createdate, updatedate FROM '.rex::getTable($addon.'_'.$plugin).' ORDER BY id', 20);
 		$list = rex_list::factory('SELECT * FROM '.rex::getTable($addon).' ORDER BY id', 50);
 		$list->addTableAttribute('class', 'table-hover');
 		$list->addTableColumnGroup(array(20,'*',240,50,200));
@@ -161,20 +161,36 @@
 		$list->setColumnFormat('origin_id', 'custom', 'get_origin');
 		if( !function_exists('get_origin') ){ function get_origin($params){
 			$list = $params["list"];
-			$name = rex_article::get($list->getValue("origin_id"))->getValue('name');
-			$short = substr($name, 0, 28);
+			$origin_name = $list->getValue("origin_name");
 
-			$params = array(
-				'page' => 'content/edit',
-				'category_id' => rex_article::get($list->getValue("origin_id"))->getCategoryId(),
-				'article_id' => $list->getValue("origin_id"),
-				'clang' => $list->getValue("origin_clang"),
-				'mode' => 'edit',
-			);
+			if( $origin_name == 'content/edit' ) {
+				$name = rex_article::get($list->getValue("origin_id"))->getValue('name');
+				$params = array(
+					'page' => 'content/edit',
+					'category_id' => rex_article::get($list->getValue("origin_id"))->getCategoryId(),
+					'article_id' => $list->getValue("origin_id"),
+					'clang' => $list->getValue("origin_clang"),
+					'mode' => 'edit',
+				);
+			}
+			else {
+				// page=funding_db/funding_db/overview&func=edit&id=1
+				$addon = explode('/', $origin_name);
+				$package = rex_package::get( $addon[0] );
+				$name = $package->i18n('funding_db');
+				$params = array(
+					'page' => $origin_name,
+					'func' => 'edit',
+					'id' => $list->getValue("origin_id"),
+				);
+			}
+			
+			$short = substr($name, 0, 28);
 			$linkname = sprintf(
 				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</span>',
 				$name, $short, (strlen($name) > 32 ) ? ' ...' : ''
 			);
+
 			return $list->getColumnLink('origin_id', $linkname, $params);
 		}}
 

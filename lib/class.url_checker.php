@@ -17,46 +17,45 @@
 		{
 			self::$addon = $addon;
 
-			self::$ids = url_checker_ids::init();
-			self::$clang = rex_clang::getAllIds();
-			self::getArticle();
-			// self::getFundingDB('funding_db_overview');
+			// self::$ids = url_checker_ids::init();
+			// self::$clang = rex_clang::getAllIds();
+			// self::getArticle();
+
+			self::getFundingDB('funding_db_overview', 'funding_db/funding_db/overview');
+			/*
+			page=funding_db/funding_db/overview
+			func=edit
+			id=1
+			*/
 
 			return self::$link_count;
 		}
 
 
 		// get all db entries
-		// private static function getFundingDB($dbname)
-		// {
-		// 	if( !empty($dbname) ) {
-		// 		$sql = rex_sql::factory();
-		// 		$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
-		// 		$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
-		// 		$sql->select();
-		//
-		// 		$arr = '';
-		// 		if($sql->getRows()) { // nicht 0!
-		// 	    	while($sql->hasNext()) {
-		// 				$id = $sql->getValue('id');
-		// 				$de = $sql->getValue('homepage_de');
-		// 				$en = $sql->getValue('homepage_en');
-		//
-		// 				if( !empty($de) ) { self::$links[] = [ 'id' => $id, 'links' => $de, 'clang' => 1, ]; }
-		// 				if( !empty($en) ) { self::$links[] = [ 'id' => $id, 'links' => $en, 'clang' => 2, ]; }
-		//
-		// 				$sql->next();
-		// 			}
-		// 		}
-		// 	}
-		//
-		//
-		// 	echo '<pre>';
-		// 	print_r(self::$links);
-		// 	echo '</pre>';
-		//
-		// 	exit;
-		// }
+		private static function getFundingDB($dbname, $addonpage )
+		{
+			if( !empty($addon) && !empty($addonpage) ) {
+				$sql = rex_sql::factory();
+				$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
+				$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
+				$sql->select();
+
+				$arr = '';
+				if($sql->getRows()) { // nicht 0!
+			    	while($sql->hasNext()) {
+						$id = $sql->getValue('id');
+						$de = $sql->getValue('homepage_de');
+						$en = $sql->getValue('homepage_en');
+
+						if( !empty($de) ) { self::$links[] = [ 'id' => $id, 'links' => $de, 'clang' => 1, 'origin' => $addonpage, ]; }
+						if( !empty($en) ) { self::$links[] = [ 'id' => $id, 'links' => $en, 'clang' => 2, 'origin' => $addonpage, ]; }
+
+						$sql->next();
+					}
+				}
+			}
+		}
 
 		// get all article
 		private static function getArticle()
@@ -87,7 +86,14 @@
 						'id' => $id,
 						'links' => $arr,
 						'clang' => $clang,
+						'origin' => 'content/edit',
 					];
+
+					// echo '<pre>';
+					// print_r($arr);
+					// echo '</pre>';
+					// exit;
+
 					self::saveToDb($arr, $id, $clang);
 				}
 			}
@@ -118,6 +124,7 @@
 				$sql = rex_sql::factory();
 				$sql->setTable(rex::getTablePrefix().self::$addon)
 					->setValue('link',$link)
+					->setValue('origin_name',$page_name)
 					->setValue('origin_id',$page_id)
 					->setValue('origin_clang',$clang)
 					->addGlobalUpdateFields()
