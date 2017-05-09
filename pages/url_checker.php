@@ -166,29 +166,29 @@
 			if( $origin_name == 'content/edit' ) {
 				$name = rex_article::get($list->getValue("origin_id"))->getValue('name');
 				$params = array(
-					'page' => 'content/edit',
-					'category_id' => rex_article::get($list->getValue("origin_id"))->getCategoryId(),
-					'article_id' => $list->getValue("origin_id"),
-					'clang' => $list->getValue("origin_clang"),
-					'mode' => 'edit',
+					'page' 			=> 'content/edit',
+					'category_id' 	=> rex_article::get($list->getValue("origin_id"))->getCategoryId(),
+					'article_id' 	=> $list->getValue("origin_id"),
+					'clang' 		=> $list->getValue("origin_clang"),
+					'mode' 			=> 'edit',
 				);
 			}
 			else {
 				// page=funding_db/funding_db/overview&func=edit&id=1
 				$addon = explode('/', $origin_name);
-				$package = rex_package::get( $addon[0] );
-				$name = $package->i18n('funding_db');
+				$name = rex_package::get( $addon[0] )->i18n('funding_db');
 				$params = array(
-					'page' => $origin_name,
-					'func' => 'edit',
-					'id' => $list->getValue("origin_id"),
+					'page' 			=> $origin_name,
+					'func' 			=> 'edit',
+					'id' 			=> $list->getValue("origin_id"),
 				);
 			}
-			
-			$short = substr($name, 0, 28);
+
+			$max = 30;
+			$short = substr($name, 0, $max) . ((strlen($name) > $max ) ? ' ...' : '');
 			$linkname = sprintf(
-				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</span>',
-				$name, $short, (strlen($name) > 32 ) ? ' ...' : ''
+				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s</span>',
+				$name, $short
 			);
 
 			return $list->getColumnLink('origin_id', $linkname, $params);

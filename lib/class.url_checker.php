@@ -22,11 +22,6 @@
 			// self::getArticle();
 
 			self::getFundingDB('funding_db_overview', 'funding_db/funding_db/overview');
-			/*
-			page=funding_db/funding_db/overview
-			func=edit
-			id=1
-			*/
 
 			return self::$link_count;
 		}
@@ -35,7 +30,7 @@
 		// get all db entries
 		private static function getFundingDB($dbname, $addonpage )
 		{
-			if( !empty($addon) && !empty($addonpage) ) {
+			if( !empty($dbname) && !empty($addonpage) ) {
 				$sql = rex_sql::factory();
 				$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
 				$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
@@ -45,16 +40,37 @@
 				if($sql->getRows()) { // nicht 0!
 			    	while($sql->hasNext()) {
 						$id = $sql->getValue('id');
-						$de = $sql->getValue('homepage_de');
-						$en = $sql->getValue('homepage_en');
+						$de[] = $sql->getValue('homepage_de');
+						$en[] = $sql->getValue('homepage_en');
 
-						if( !empty($de) ) { self::$links[] = [ 'id' => $id, 'links' => $de, 'clang' => 1, 'origin' => $addonpage, ]; }
-						if( !empty($en) ) { self::$links[] = [ 'id' => $id, 'links' => $en, 'clang' => 2, 'origin' => $addonpage, ]; }
+						if( count($de) > 0 && $arr = self::clearUrls($de)  ) {
+							self::$links[] = [
+								'id' 		=> $id,
+								'links' 	=> $arr,
+								'clang' 	=> 1,
+								'origin' 	=> $addonpage,
+							];
+							self::saveToDb($arr, $id, 1, $addonpage);
+						}
+
+						if( count($en) > 0 && $arr = self::clearUrls($en) ) {
+							self::$links[] = [
+								'id' 		=> $id,
+								'links' 	=> $arr,
+								'clang' 	=> 2,
+								'origin' 	=> $addonpage,
+							];
+							self::saveToDb($arr, $id, 2, $addonpage);
+						}
 
 						$sql->next();
 					}
 				}
 			}
+			// echo '<pre>';
+			// print_r($arr);
+			// echo '</pre>';
+			// exit;
 		}
 
 		// get all article
@@ -88,13 +104,7 @@
 						'clang' => $clang,
 						'origin' => 'content/edit',
 					];
-
-					// echo '<pre>';
-					// print_r($arr);
-					// echo '</pre>';
-					// exit;
-
-					self::saveToDb($arr, $id, $clang);
+					self::saveToDb($arr, $id, $clang, 'content/edit');
 				}
 			}
 		}
@@ -117,7 +127,7 @@
 		}
 
 		// save all to the database
-		private static function saveToDb($links, $page_id, $clang)
+		private static function saveToDb($links, $page_id, $clang, $page_name)
 		{
 			foreach($links AS $link)
 			{
