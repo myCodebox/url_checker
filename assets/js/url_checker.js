@@ -95,7 +95,6 @@ $(document).on('rex:ready', function (event, container) {
 		keyboard: false, backdrop: 'static', show: false,
 	}).on('show.bs.modal', function(){
 		$('html').css('overflow-y', 'hidden');
-		$('html').css('overflow-y', 'scroll');
 	}).on('hide.bs.modal', function(){
 		$('html').css('overflow-y', 'scroll');
 	});
