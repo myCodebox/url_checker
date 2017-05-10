@@ -114,7 +114,7 @@
 		#$list = rex_list::factory('SELECT id, link, origin_name, origin_clang, origin_id, status, createdate, updatedate FROM '.rex::getTable($addon.'_'.$plugin).' ORDER BY id', 20);
 		$list = rex_list::factory('SELECT * FROM '.rex::getTable($addon).' ORDER BY id', 50);
 		$list->addTableAttribute('class', 'table-hover');
-		$list->addTableColumnGroup(array(20,'*',240,50,200));
+		$list->addTableColumnGroup(array(20,'*',250,50,200));
 
 
 		$thIcon = '#';
@@ -123,7 +123,9 @@
 
 
 		$list->removeColumn('id');
-		$list->removeColumn('origin_name');
+		$list->removeColumn('origin_path');
+		// $list->removeColumn('origin_name');
+		$list->removeColumn('origin_id');
 		$list->removeColumn('createuser');
 		$list->removeColumn('createdate');
 		$list->removeColumn('updateuser');
@@ -157,39 +159,46 @@
 		}}
 
 
-		$list->setColumnLabel('origin_id', $this->i18n('url_checker/origin'));
-		$list->setColumnSortable('origin_id');
-		$list->setColumnFormat('origin_id', 'custom', 'get_origin');
+		$list->setColumnLabel('origin_name', $this->i18n('url_checker/origin'));
+		$list->setColumnSortable('origin_name');
+		$list->setColumnFormat('origin_name', 'custom', 'get_origin');
 		if( !function_exists('get_origin') ){ function get_origin($params){
 			$list = $params["list"];
-			$origin_name = $list->getValue("origin_name");
+			$origin_path = $list->getValue("origin_path");
 
-			if( $origin_name == 'content/edit' ) {
-				$name = rex_article::get($list->getValue("origin_id"))->getValue('name');
+			if( $origin_path == 'content/edit' ) {
+				$icon = '';
+				$id 	= $list->getValue("origin_id");
+				$clang 	= $list->getValue("origin_clang");
+				$name = rex_article::get($id, $clang)->getValue('name');
 				$params = array(
 					'page' 			=> 'content/edit',
-					'category_id' 	=> rex_article::get($list->getValue("origin_id"))->getCategoryId(),
-					'article_id' 	=> $list->getValue("origin_id"),
-					'clang' 		=> $list->getValue("origin_clang"),
+					'category_id' 	=> rex_article::get($id, $clang)->getCategoryId(),
+					'article_id' 	=> $id,
+					'clang' 		=> $clang,
 					'mode' 			=> 'edit',
 				);
 			}
 			else {
 				// page=funding_db/funding_db/overview&func=edit&id=1
-				$addon = explode('/', $origin_name);
-				$name = rex_package::get( $addon[0] )->i18n('funding_db');
+				$addonname = explode('/', $origin_path);
+				$addon = rex_addon::get($addonname[0]);
+				$page = $addon->getProperty('page');
+				$name 	= $page['title'];
+				$icon 	= $page['icon'];
+				$icon = sprintf('<i class="%s"></i> ', $icon);
 				$params = array(
-					'page' 			=> $origin_name,
-					'func' 			=> 'edit',
-					'id' 			=> $list->getValue("origin_id"),
+					'page' 	=> $origin_path,
+					'func' 	=> 'edit',
+					'id' 	=> $list->getValue("origin_id"),
 				);
 			}
 
 			$max = 30;
 			$short = substr($name, 0, $max) . ((strlen($name) > $max ) ? ' ...' : '');
 			$linkname = sprintf(
-				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s</span>',
-				$name, $short
+				'<span title="%s" target="_blank" data-toggle="tooltip" data-placement="top">%s%s</span>',
+				$name, $icon, $short
 			);
 
 			return $list->getColumnLink('origin_id', $linkname, $params);

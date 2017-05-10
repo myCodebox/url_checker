@@ -49,12 +49,13 @@
 							$match[] = $de;
 							if( $arr = self::clearUrls($match)  ) {
 								self::$links[] = [
-									'id' 		=> $id,
-									'links' 	=> $arr,
-									'clang' 	=> 1,
-									'origin' 	=> $addonpage,
+									'id' 			=> $id,
+									'links' 		=> $arr,
+									'clang' 		=> 1,
+									'origin_path' 	=> $addonpage,
+									'origin_name' 	=> $addonpage,
 								];
-								self::saveToDb($arr, $id, 1, $addonpage);
+								self::saveToDb($arr, $id, 1, $addonpage, $addonpage);
 							}
 						}
 
@@ -63,12 +64,13 @@
 							$match[] = $en;
 							if( $arr = self::clearUrls($match) ) {
 								self::$links[] = [
-									'id' 		=> $id,
-									'links' 	=> $arr,
-									'clang' 	=> 2,
-									'origin' 	=> $addonpage,
+									'id' 			=> $id,
+									'links' 		=> $arr,
+									'clang' 		=> 2,
+									'origin_path' 	=> $addonpage,
+									'origin_name' 	=> $addonpage,
 								];
-								self::saveToDb($arr, $id, 2, $addonpage);
+								self::saveToDb($arr, $id, 2, $addonpage, $addonpage);
 							}
 						}
 
@@ -77,7 +79,7 @@
 				}
 			}
 			// echo '<pre>';
-			// print_r($arr);
+			// print_r(self::$links);
 			// echo '</pre>';
 			// exit;
 		}
@@ -107,13 +109,16 @@
 			{
 				if( $arr = self::clearUrls($matches[2]))
 				{
+					$origin_path = 'content/edit';
+					$origin_name = rex_article::get($id, $clang)->getValue('name');
 					self::$links[] = [
-						'id' => $id,
-						'links' => $arr,
-						'clang' => $clang,
-						'origin' => 'content/edit',
+						'id' 			=> $id,
+						'links' 		=> $arr,
+						'clang' 		=> $clang,
+						'origin_path' 	=> $origin_path,
+						'origin_name' 	=> $origin_name,
 					];
-					self::saveToDb($arr, $id, $clang, 'content/edit');
+					self::saveToDb($arr, $id, $clang, $origin_path, $origin_name);
 				}
 			}
 		}
@@ -136,13 +141,14 @@
 		}
 
 		// save all to the database
-		private static function saveToDb($links, $page_id, $clang, $page_name)
+		private static function saveToDb($links, $page_id, $clang, $page_path, $page_name)
 		{
 			foreach($links AS $link)
 			{
 				$sql = rex_sql::factory();
 				$sql->setTable(rex::getTablePrefix().self::$addon)
 					->setValue('link',$link)
+					->setValue('origin_path',$page_path)
 					->setValue('origin_name',$page_name)
 					->setValue('origin_id',$page_id)
 					->setValue('origin_clang',$clang)
@@ -166,6 +172,12 @@
 				$sql->setTable(rex::getTablePrefix().$addon);
 				try {
 					$sql->delete();
+
+					// ALTER TABLE rex_com_user AUTO_INCREMENT = 1
+					$sql = rex_sql::factory();
+					$sql->setQuery('ALTER TABLE '.rex::getTablePrefix().$addon.' AUTO_INCREMENT = 1');
+					rex_delete_cache();
+					
 					return true;
 				} catch (rex_sql_exception $e) {
 					echo rex_view::warning($e->getMessage());
