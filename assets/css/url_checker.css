@@ -36,3 +36,12 @@
 .tooltip-inner {
 	word-wrap: break-word;
 }
+/*
+.nobreak {
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: #e34;
+}
+*/
