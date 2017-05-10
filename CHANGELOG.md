@@ -1,3 +1,7 @@
+### 06.10.2016 Version 0.2.1 ###
+- Update the default install.sql
+- Rework the URL collector
+
 ### 06.10.2016 Version 0.2.0 ###
 - Get URLs from DB (hard coded)
 

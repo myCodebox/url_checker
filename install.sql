@@ -19,3 +19,8 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%url_checker` (
 
 
 INSERT INTO `rex_url_checker` (`id`, `link`, `origin_path`, `origin_name`, `origin_id`, `origin_clang`, `status`, `createuser`, `updateuser`, `createdate`, `updatedate`, `revision`) VALUES
+(1, 'http://www.raum3.at', 'content/edit', 'Home', 5, 1, '', 'test', 'test', '2017-10-05 14:30:00', '2017-05-06 14:30:00', 0),
+(2, 'http://www.codebox.at', 'content/edit', 'Home', 5, 1, '', 'test', 'test', '2017-10-05 14:30:00', '2017-05-06 14:30:00', 0),
+(3, 'http://www.codebox.at/empty', 'content/edit', 'Home', 5, 1, '', 'test', 'test', '2017-05-06 14:30:00', '2017-05-06 14:30:00', 0),
+(4, 'http://www.akbild.ac.at/Portal/kunst-forschung/kunst-forschung-service/ausschreibungen-wettbewerbe', 'funding_db/funding_db/overview', 'funding_db/funding_db/overview', 1, 1, '', 'test', 'test', '2017-05-06 14:30:00', '2017-05-06 14:30:00', 0),
+(5, 'http://www.akbild.ac.at/Portal/kunst-forschung/kunst-forschung-service/ausschreibungen-wettbewerbe', 'funding_db/funding_db/overview', 'funding_db/funding_db/overview', 1, 2, '', 'test', 'test', '2017-05-06 14:30:00', '2017-05-06 14:30:00', 0);
