@@ -30,58 +30,61 @@
 		// get all db entries
 		private static function getFundingDB($dbname, $addonpage )
 		{
-			if( !empty($dbname) && !empty($addonpage) ) {
-				$sql = rex_sql::factory();
-				$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
-				$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
-				$sql->select();
+			$db = rex::getTablePrefix().$dbname;
+			if (in_array(rex::getTable($db), rex_sql::showTables())) {
+				if( !empty($dbname) && !empty($addonpage) ) {
+					$sql = rex_sql::factory();
+					$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
+					$sql->setWhere('homepage_de <> "" or homepage_en <> ""');
+					$sql->select();
 
-				$arr = '';
-				if($sql->getRows()) { // nicht 0!
-			    	while($sql->hasNext()) {
+					$arr = '';
+					if($sql->getRows()) { // nicht 0!
+					while($sql->hasNext()) {
 
-						$id = $sql->getValue('id');
-						$de = $sql->getValue('homepage_de');
-						$en = $sql->getValue('homepage_en');
+							$id = $sql->getValue('id');
+							$de = $sql->getValue('homepage_de');
+							$en = $sql->getValue('homepage_en');
 
-						$match = [];
-						if($de != '') {
-							$match[] = $de;
-							if( $arr = self::clearUrls($match)  ) {
-								self::$links[] = [
-									'id' 			=> $id,
-									'links' 		=> $arr,
-									'clang' 		=> 1,
-									'origin_path' 	=> $addonpage,
-									'origin_name' 	=> $addonpage,
-								];
-								self::saveToDb($arr, $id, 1, $addonpage, $addonpage);
+							$match = [];
+							if($de != '') {
+								$match[] = $de;
+								if( $arr = self::clearUrls($match)  ) {
+									self::$links[] = [
+										'id' 			=> $id,
+										'links' 		=> $arr,
+										'clang' 		=> 1,
+										'origin_path' 	=> $addonpage,
+										'origin_name' 	=> $addonpage,
+									];
+									self::saveToDb($arr, $id, 1, $addonpage, $addonpage);
+								}
 							}
-						}
 
-						$match = [];
-						if($en != '') {
-							$match[] = $en;
-							if( $arr = self::clearUrls($match) ) {
-								self::$links[] = [
-									'id' 			=> $id,
-									'links' 		=> $arr,
-									'clang' 		=> 2,
-									'origin_path' 	=> $addonpage,
-									'origin_name' 	=> $addonpage,
-								];
-								self::saveToDb($arr, $id, 2, $addonpage, $addonpage);
+							$match = [];
+							if($en != '') {
+								$match[] = $en;
+								if( $arr = self::clearUrls($match) ) {
+									self::$links[] = [
+										'id' 			=> $id,
+										'links' 		=> $arr,
+										'clang' 		=> 2,
+										'origin_path' 	=> $addonpage,
+										'origin_name' 	=> $addonpage,
+									];
+									self::saveToDb($arr, $id, 2, $addonpage, $addonpage);
+								}
 							}
-						}
 
-						$sql->next();
+							$sql->next();
+						}
 					}
 				}
+				// echo '<pre>';
+				// print_r(self::$links);
+				// echo '</pre>';
+				// exit;
 			}
-			// echo '<pre>';
-			// print_r(self::$links);
-			// echo '</pre>';
-			// exit;
 		}
 
 		// get all article
