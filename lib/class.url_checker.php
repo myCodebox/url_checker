@@ -30,8 +30,7 @@
 		// get all db entries
 		private static function getFundingDB($dbname, $addonpage )
 		{
-			$db = rex::getTablePrefix().$dbname;
-			if (in_array(rex::getTable($db), rex_sql::showTables())) {
+			if (in_array(rex::getTable($dbname), rex_sql::showTables())) {
 				if( !empty($dbname) && !empty($addonpage) ) {
 					$sql = rex_sql::factory();
 					$sql->setTable(rex::getTablePrefix().$dbname); // rex_foo_bar
@@ -48,7 +47,7 @@
 
 							$match = [];
 							if($de != '') {
-								$match[] = $de;
+								$match[] = explode(',', $de);
 								if( $arr = self::clearUrls($match)  ) {
 									self::$links[] = [
 										'id' 			=> $id,
@@ -63,7 +62,7 @@
 
 							$match = [];
 							if($en != '') {
-								$match[] = $en;
+								$match[] = explode(',', $en);
 								if( $arr = self::clearUrls($match) ) {
 									self::$links[] = [
 										'id' 			=> $id,
