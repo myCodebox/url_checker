@@ -1,3 +1,6 @@
+### 02.03.2019 Version 0.2.2 ###
+- Fix some typo
+
 ### 06.10.2016 Version 0.2.1 ###
 - Update the default install.sql
 - Rework the URL collector

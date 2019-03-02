@@ -1,6 +1,8 @@
+Beerware License
+
 ### URL Checker Redaxo 5 - [Beerware License](https://en.wikipedia.org/wiki/Beerware)
 
-![Funny Beer](./assets/img/funny_beer.gif "Funny Beer")
+![Funny Beer Image](./assets/img/funny_beer.gif "Funny Beer")
 
 "[THE BEER-WARE LICENSE](https://en.wikipedia.org/wiki/Beerware)" (Revision 42):
 [**Herbert Leier**](https://www.codebox.at) wrote this addon. As long as you retain this notice you

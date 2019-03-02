@@ -6,7 +6,7 @@
 	$content =  $Parsedown->text($file);
 
 	$search  = './assets';
-	$replace = '../assets/addons/less_compiler';
+	$replace = '../assets/addons/url_checker';
 	$content = str_replace($search, $replace, $content);
 
 	$fragment = new rex_fragment();
