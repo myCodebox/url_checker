@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%url_checker` (
     `updatedate` datetime NOT NULL,
     `revision` int(11) unsigned NOT NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `rex_url_checker` (`id`, `link`, `origin_path`, `origin_name`, `origin_id`, `origin_clang`, `status`, `createuser`, `updateuser`, `createdate`, `updatedate`, `revision`) VALUES
