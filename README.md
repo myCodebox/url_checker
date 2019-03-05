@@ -11,6 +11,8 @@
 
 This addon collect all external url's of the frontend and test the HTTP status.
 
+![Url Checker Screen](./assets/img/screen_url_checker.png "Url Checker Screen")
+
 More info can be found here:
 * Github - [https://github.com/myCodebox/url_checker](https://github.com/myCodebox/url_checker)
 

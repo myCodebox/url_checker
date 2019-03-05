@@ -174,7 +174,7 @@
 				$icon = '';
 				$id 	= $list->getValue("origin_id");
 				$clang 	= $list->getValue("origin_clang");
-				$name = rex_article::get($id, $clang)->getValue('name');
+				$name   = rex_article::get($id, $clang)->getValue('name');
 				$params = array(
 					'page' 			=> 'content/edit',
 					'category_id' 	=> rex_article::get($id, $clang)->getCategoryId(),
